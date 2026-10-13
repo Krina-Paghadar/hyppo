@@ -36,8 +36,6 @@ class TestDcorrStat:
 
         assert_almost_equal(stat, 0.762676242417, decimal=2)
 
-    @pytest.mark.parametrize("dtype", [np.float32, np.float64, np.int32, np.int64])
-
     def test_fast_large_n_no_overflow(self):
         # n**4 overflows int64 for n > ~55,000; the fast statistic of independent
         # data must stay near 0 instead of blowing up (issue #353)
@@ -50,7 +48,8 @@ class TestDcorrStat:
         stat = test.statistic(x, y)
 
         assert abs(stat) < 1e-2
-        
+
+    @pytest.mark.parametrize("dtype", [np.float32, np.float64, np.int32, np.int64])
     def test_dtypes(self, dtype):
         np.random.seed(123456789)
         x, y = linear(100, 1)
